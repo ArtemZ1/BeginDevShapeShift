@@ -42,7 +42,10 @@ public class PlayerInteract : MonoBehaviour
             GorillaThrow(currentlyHolding);
         }
 
-
+        if (!holdingObject)
+        {
+            canThrow = false;
+        }
         ThrowCooldown();
     }
 
@@ -66,8 +69,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void GorillaDrop(GameObject obj)
     {
-        holdingObject = false;
-        currentlyHolding = null;
+        removeItemFromHands();
 
         obj.transform.transform.parent = null;
         obj.AddComponent<Rigidbody>();
@@ -75,9 +77,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void GorillaThrow(GameObject obj)
     {
-        holdingObject = false;
-        currentlyHolding = null;
-        canThrow = false;
+        removeItemFromHands();
 
         obj.transform.transform.parent = null;
         obj.AddComponent<Rigidbody>();
@@ -90,6 +90,14 @@ public class PlayerInteract : MonoBehaviour
             Destroy(obj);
         
     }
+
+    private void removeItemFromHands()
+    {
+        holdingObject = false;
+        currentlyHolding = null;
+        canThrow = false;
+    }
+
 
     private void ThrowCooldown()
     {
